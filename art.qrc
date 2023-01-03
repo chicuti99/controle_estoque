@@ -1,0 +1,6 @@
+<RCC>
+    <qresource lang="pt" prefix="/teste">
+        <file>lock.png</file>
+        <file>unlocked.png</file>
+    </qresource>
+</RCC>
