@@ -17,9 +17,15 @@ public:
     ~fm_log();
     bool logado;
     conection con;
+    QString nome,acesso;
+    int id;
+    QSqlDatabase bancodedados=QSqlDatabase::addDatabase("QSQLITE");
+
 
 private slots:
     void on_btn_logar_clicked();
+
+    void on_btn_cancelar_clicked();
 
 private:
     Ui::fm_log *ui;
