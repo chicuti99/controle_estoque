@@ -15,6 +15,23 @@ public:
     explicit fm_gestaocolaboradores(QWidget *parent = nullptr);
     ~fm_gestaocolaboradores();
 
+private slots:
+    void on_btn_novocolab_clicked();
+
+    void on_btn_gravarnovocolab_clicked();
+
+    void on_btn_cancelarnovo_clicked();
+
+    void on_tabWidget_currentChanged(int index);
+
+    void on_tw_ge_listacolab_itemSelectionChanged();
+
+    void on_btn_ge_filtrar_clicked();
+
+    void on_btn_ge_salvar_clicked();
+
+    void on_btn_ge_excluir_clicked();
+
 private:
     Ui::fm_gestaocolaboradores *ui;
 };

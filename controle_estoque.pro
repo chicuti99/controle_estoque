@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql printsupport
 
 CONFIG += c++17
 
@@ -15,6 +15,7 @@ SOURCES += \
     fm_gestaovendas.cpp \
     fm_log.cpp \
     fm_nova_venda.cpp \
+    funcoes_globais.cpp \
     main.cpp \
     fm_principal.cpp
 
@@ -26,7 +27,9 @@ HEADERS += \
     fm_gestaovendas.h \
     fm_log.h \
     fm_nova_venda.h \
-    fm_principal.h
+    fm_principal.h \
+    funcoes_globais.h \
+    variaveis_globais.h
 
 FORMS += \
     fm_editarprodvenda.ui \

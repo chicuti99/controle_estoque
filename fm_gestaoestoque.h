@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QMessageBox>
 #include<QTableWidget>
+#include <QtSql>
+#include <QMessageBox>
 namespace Ui {
 class fm_gestaoestoque;
 }
@@ -15,7 +17,7 @@ class fm_gestaoestoque : public QDialog
 public:
     explicit fm_gestaoestoque(QWidget *parent = nullptr);
     ~fm_gestaoestoque();
-    void remover_linhas(QTableWidget *tw);
+
 
 private slots:
     void on_btn_novoproduto_clicked();

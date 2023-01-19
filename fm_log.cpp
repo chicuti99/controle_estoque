@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QVariant>
 #include "fm_principal.h"
+#include "variaveis_globais.h"
 
 //static QSqlDatabase bancodedados=QSqlDatabase::addDatabase("QSQLITE");
 
@@ -43,11 +44,11 @@ void fm_log::on_btn_logar_clicked()
          if(query.exec("SELECT * FROM colaboradores WHERE username='"+username+"' AND senha='"+senha+"'")){
              query.first();
              if(query.value(1).toString() !=""){
-                 fm_principal::logado = true;
-                 fm_principal::nome_colab=query.value(1).toString();
-                 fm_principal::id_colab = query.value(0).toInt();
-                 fm_principal::acesso_colab=query.value(4).toString();
-                 QMessageBox::warning(this,"erro","login realizado");
+                 variaveis_globais::logado = true;
+                 variaveis_globais::nome_colab=query.value(1).toString();
+                variaveis_globais::id_colab = query.value(0).toInt();
+                 variaveis_globais::acesso_colab=query.value(5).toString();
+                 QMessageBox::information(this,"Sucesso","login realizado");
                  bancodedados.close();
                  close();
              }

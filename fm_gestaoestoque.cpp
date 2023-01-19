@@ -1,6 +1,8 @@
 #include "fm_gestaoestoque.h"
 #include "ui_fm_gestaoestoque.h"
 #include <QtSql>
+#include <QMessageBox>
+#include "funcoes_globais.h"
 //#include "fm_log.h"
 
 static QSqlDatabase bancodedados=QSqlDatabase::addDatabase("QSQLITE");
@@ -100,7 +102,7 @@ void fm_gestaoestoque::on_btn_gravar_clicked()
 void fm_gestaoestoque::on_tabWidget_currentChanged(int index)
 {
     if(index == 1){
-        remover_linhas(ui->tw_ge_produtos);
+        funcoes_globais::remover_linhas(ui->tw_ge_produtos);
         int contlinhas= 0;
         QSqlQuery query;
         query.prepare("select id_produtos,produto from tb_produtos order by produto");
@@ -131,11 +133,7 @@ void fm_gestaoestoque::on_tabWidget_currentChanged(int index)
     }
 }
 
-void fm_gestaoestoque::remover_linhas(QTableWidget *tw){
-     while(tw->rowCount() >0){
-         tw->removeRow(0);
-     }
-}
+
 void fm_gestaoestoque::on_tw_ge_produtos_itemSelectionChanged()
 {
     int id = ui->tw_ge_produtos->item(ui->tw_ge_produtos->currentRow(),0)->text().toInt();
@@ -219,7 +217,7 @@ void fm_gestaoestoque::on_btn_ge_excluir_clicked()
 void fm_gestaoestoque::on_btn_ge_filtrar_clicked()
 {
     QString busca;
-    remover_linhas(ui->tw_ge_produtos);
+    funcoes_globais::remover_linhas(ui->tw_ge_produtos);
     if(ui->txt_ge_filtro->text() == ""){
         if(ui->rb_ge_codigo->isChecked()){
             busca = "select id_produtos ,produto from  tb_produtos order by id_produtos";

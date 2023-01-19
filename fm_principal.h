@@ -16,9 +16,7 @@ public:
     ~fm_principal();
     QIcon cadfechado;
     QIcon *cadaberto= new QIcon();
-    static bool logado;
-    static QString nome_colab,acesso_colab,username_colab;
-    static int id_colab;
+
 
 
 private slots:

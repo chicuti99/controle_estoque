@@ -6,19 +6,20 @@
 #include "fm_gestaocolaboradores.h"
 #include "fm_gestaoestoque.h"
 #include "fm_gestaovendas.h"
+#include "variaveis_globais.h"
 
-int fm_principal::id_colab;
-QString fm_principal::acesso_colab;
-QString fm_principal::nome_colab;
-QString fm_principal::username_colab;
-bool fm_principal::logado;
+int variaveis_globais::id_colab;
+QString variaveis_globais::acesso_colab;
+QString variaveis_globais::nome_colab;
+QString variaveis_globais::username_colab;
+bool variaveis_globais::logado;
 
 fm_principal::fm_principal(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::fm_principal)
 {
     ui->setupUi(this);
-    logado = false;
+    variaveis_globais::logado = false;
     cadfechado.addFile(":/teste/lock.png");
     cadaberto->addFile(":/teste/unlocked.png");
 
@@ -39,19 +40,19 @@ fm_principal::~fm_principal()
 
 void fm_principal::on_btn_bloquear_clicked()
 {
-    if(!logado){
+    if(!variaveis_globais::logado){
            fm_log f_logar;
            f_logar.exec();
 
 
-           if(logado){
+           if(variaveis_globais::logado){
                ui->btn_bloquear->setIcon(*cadaberto);
-               ui->lb_nome->setText(nome_colab);
+               ui->lb_nome->setText(variaveis_globais::nome_colab);
            }
     }
 
     else{
-        logado = true;
+        variaveis_globais::logado = true;
         ui->btn_bloquear->setIcon(*cadaberto);
          ui->lb_nome->setText("sem colaborador");
 
@@ -61,7 +62,7 @@ void fm_principal::on_btn_bloquear_clicked()
 
 void fm_principal::on_pushButton_3_clicked()
 {
-    if(logado){
+    if(variaveis_globais::logado){
         fm_nova_venda f_novavenda;
         f_novavenda.exec();
     }
@@ -74,7 +75,7 @@ void fm_principal::on_pushButton_3_clicked()
 
 void fm_principal::on_actionEstoque_triggered()
 {
-    if(logado && acesso_colab== "A"){
+    if(variaveis_globais::logado && variaveis_globais::acesso_colab== "A"){
         fm_gestaoestoque f_gestaoestoque;
         f_gestaoestoque.exec();
   }
@@ -87,7 +88,7 @@ void fm_principal::on_actionEstoque_triggered()
 
 void fm_principal::on_actionColaboradores_triggered()
 {
-    if(logado && acesso_colab== "A"){
+    if(variaveis_globais::logado && variaveis_globais::acesso_colab== "A"){
         fm_gestaocolaboradores f_gestacolab;
         f_gestacolab.exec();
   }
@@ -100,7 +101,7 @@ void fm_principal::on_actionColaboradores_triggered()
 
 void fm_principal::on_actionVendas_triggered()
 {
-    if(logado && acesso_colab== "A"){
+    if(variaveis_globais::logado && variaveis_globais::acesso_colab== "A"){
         fm_gestaovendas f_gestaovenda;
         f_gestaovenda.exec();
   }

@@ -2,6 +2,9 @@
 #include "ui_fm_nova_venda.h"
 #include <QtSql>
 #include "fm_editarprodvenda.h"
+#include "fm_principal.h"
+#include "variaveis_globais.h"
+
 static QSqlDatabase bancodedados=QSqlDatabase::addDatabase("QSQLITE");
 
 QString fm_nova_venda::g_idprod;
@@ -85,6 +88,15 @@ void fm_nova_venda::resetacampos(){
     ui->txt_codprod->setFocus();
 }
 
+
+void fm_nova_venda::removelinhas(QTableWidget *tw){
+    while(tw->rowCount()>0){
+        tw->removeRow(0);
+    }
+}
+
+
+
 double fm_nova_venda::calculatotal(QTableWidget *tw,int coluna ){
     int totalinhas;
     double total;
@@ -134,5 +146,53 @@ void fm_nova_venda::on_btn_editprod_clicked()
             ui->lb_total->setText("R$ "+QString::number(calculatotal(ui->tw_listaprod,4)));
     }
 }
+}
+
+
+void fm_nova_venda::on_btn_final_clicked()
+{
+    if(ui->tw_listaprod->rowCount() >0){
+        int idVenda;
+        QString msgfimvenda;
+        double total = calculatotal(ui->tw_listaprod,4);
+        QString data = QDate::currentDate().toString("yyyy-MM-dd");
+        QString hora =QTime::currentTime().toString("hh:mm:ss");
+        QSqlQuery query;
+        query.prepare("insert into tb_vendas(data_venda,hora_venda,id_colaborador,valor_total,id_tipo_pagamento) values ('"+data+"','"+hora+"','"+QString::number(variaveis_globais::id_colab)+"','"+QString::number(total)+"',1)");
+        if(!query.exec()){
+            QMessageBox::warning(this,"erro","Erro ao registrar nova venda");
+        }
+
+        else{
+            query.exec("select id_vendas from tb_vendas order by id_vendas desc limit 1 ");
+            query.exec();
+            query.first();
+            idVenda = query.value(0).toInt();
+            msgfimvenda = "ID venda "+ QString::number(idVenda)+"\nValor total R$"+QString::number(total);
+
+            int totalinhas = ui->tw_listaprod->rowCount();
+            int linha = 0;
+
+            while(linha < totalinhas){
+                QString prod= ui->tw_listaprod->item(linha,1)->text();
+                QString Qtde= ui->tw_listaprod->item(linha,3)->text();
+                QString valuni = ui->tw_listaprod->item(linha,2)->text();
+                QString valtot = ui->tw_listaprod->item(linha,4)->text();
+                query.prepare("insert into tb_vendidos (id_venda,produto,qtde,valor_un,valor_total) values('"+QString::number(idVenda)+"','"+prod+"','"+Qtde+"','"+valuni+"','"+valtot+"')");
+                query.exec();
+                linha++;
+            }
+
+            QMessageBox::warning(this,"erro",msgfimvenda);
+            resetacampos();
+            removelinhas(ui->tw_listaprod);
+            ui->lb_total->setText("R$: 0.00");
+
+        }
+    }
+
+    else{
+        QMessageBox::warning(this,"erro","Não existem produtos nessa venda\nPrimeiro adicione produtos nessa venda");
+    }
 }
 

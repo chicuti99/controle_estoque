@@ -21,6 +21,7 @@ public:
     double calculatotal(QTableWidget *tw, int coluna);
     static QString g_idprod,g_prod,g_qtde,g_valtotal,total_g;
     static bool alterou;
+    void removelinhas(QTableWidget *tw);
 
 private slots:
     void on_txt_codprod_returnPressed();
@@ -28,6 +29,8 @@ private slots:
     void on_btn_excluirprod_clicked();
 
     void on_btn_editprod_clicked();
+
+    void on_btn_final_clicked();
 
 private:
     Ui::fm_nova_venda *ui;

@@ -15,6 +15,13 @@ public:
     explicit fm_gestaovendas(QWidget *parent = nullptr);
     ~fm_gestaovendas();
 
+private slots:
+    void on_tw_listavenda_itemSelectionChanged();
+
+    void on_btn_filtrar_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::fm_gestaovendas *ui;
 };
